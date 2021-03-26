@@ -1127,12 +1127,12 @@ class FileSystemStore(Store):
         # attempt to list directory
         path = f"{self.root}/{prefix}"
         try:
-            ls = self.fs.ls(path, detail=True)
+            items = self.fs.find(path, detail=True)
         except FileNotFoundError:
             return ListDirResult(contents=contents, prefixes=prefixes)
 
         # build result
-        for item in ls:
+        for item in items.values():
             name = item["name"].split(path)[1]
             if item["type"] == "file":
                 contents.append(name)
